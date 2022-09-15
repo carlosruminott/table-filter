@@ -15,12 +15,24 @@ onMount(async () => {
   users = data.results;
 });
 
+const items = [
+  'ID',
+  'Name',
+  'Status',
+  'Gender'
+]
+
 </script>
 
 <main>
   <h1>Table filter</h1>
   
   <input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Filter by name">
+  <select name="filterType" id="filterType" bind:value>
+    {#each items as item}
+      <option>{item}</option>
+    {/each}
+  </select>
 
   {#await visibleUsers}
     <p>Loading...</p>
@@ -28,10 +40,9 @@ onMount(async () => {
     <table>
       <thead>
         <tr>
-          <Cell cellType="th" text="ID" />
-          <Cell cellType="th" text="Name" />
-          <Cell cellType="th" text="Status" />
-          <Cell cellType="th" text="Gender" />
+          {#each items as item}
+            <Cell cellType="th" text={item} />
+          {/each}
         </tr>
       </thead>
       <tbody>
