@@ -26,6 +26,14 @@ onMount(async () => {
     <p>Loading...</p>
   {:then visibleUsers} 
     <table>
+      <thead>
+        <tr>
+          <Cell cellType="th" text="ID" />
+          <Cell cellType="th" text="Name" />
+          <Cell cellType="th" text="Status" />
+          <Cell cellType="th" text="Gender" />
+        </tr>
+      </thead>
       <tbody>
         {#each visibleUsers as {id,name,status,gender} }
           <tr>
