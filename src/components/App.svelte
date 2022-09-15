@@ -1,39 +1,33 @@
 <script>
+import { onMount } from 'svelte';
 import Cell from "./table/Cell.svelte";
 
 let value = ''
-//let response = []
 
-//const handleInput = (event) => value.target.value
+let search = undefined;
+let users = [];
 
+$: visibleUsers = search ? users.filter(user => user.name.toLowerCase().includes(search.toLowerCase())) : users;
 
-let response = fetch(`https://rickandmortyapi.com/api/character/`)
-    .then(res => res.json())
-    .then(apiResponse =>  apiResponse.results || [])
-
-// const rowProps = {
-//   action: '',
-//   file: '',
-//   idprodmkt: '',
-//   sede: '',
-//   source: '',
-//   medium: '',
-//   campaign: '',
-// }
+onMount(async () => {
+  const resp = await fetch('https://rickandmortyapi.com/api/character/')
+  const data = await resp.json();
+  users = data.results;
+});
 
 </script>
 
 <main>
   <h1>Table filter</h1>
   
-  <!-- <input type="text" placeholder="Search" value={value} on:input={handleInput}> -->
+  <input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Filter by name">
 
-  {#await response}
+  {#await visibleUsers}
     <p>Loading...</p>
-  {:then response} 
+  {:then visibleUsers} 
     <table>
       <tbody>
-        {#each response as {id,name,status,gender} }
+        {#each visibleUsers as {id,name,status,gender} }
           <tr>
             <Cell cellType="td" text={id} />
             <Cell cellType="td" text={name} />
