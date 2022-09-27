@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --ext .js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.2",
